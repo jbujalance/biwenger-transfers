@@ -27,4 +27,4 @@ app.get('/balances', (req, res) => {
 });
 
 console.log('Server listening')
-app.listen(8080);
+app.listen(process.env.PORT);
