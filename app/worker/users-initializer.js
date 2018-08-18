@@ -49,6 +49,11 @@ class UsersInitializer {
             };
             saveableObjs.push(saveable);
         });
+        // Add 'Computer' user
+        saveableObjs.push({
+            biwengerId: -1,
+            name: 'Computer'
+        });
         return saveableObjs;
     }
 }
