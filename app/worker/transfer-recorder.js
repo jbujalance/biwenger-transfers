@@ -1,22 +1,22 @@
-const BiwengerTransferClient = require('../rest/biwenger-transfer-client');
+const BiwengerClient = require('../rest/biwenger-client');
 const Transfer = require('../model/transfer');
 
 class TransferRecorder {
     
     constructor() {
-        this.restClient = new BiwengerTransferClient();
+        this.restClient = new BiwengerClient();
         this.transferDao = Transfer;
     };
 
     recordNewTransfers() {
         var self = this;
-        self.restClient.getMostRecentMovements(0, 10).then((response) => {
+        self.restClient.getMostRecentMovements(0, 10).then(response => {
             console.log('Found ' + response.data.length + ' recent transfer movements in Biwenger');
-            self.transferDao.getMostRecentDate().then((date) => {
+            self.transferDao.getMostRecentDate().then(date => {
                 console.log('Last recorded date is ' + date);
                 self._saveTransfersAfterDate(response.data, date);
             });
-        }).catch((error) => {
+        }).catch(error => {
             console.log('Error while retrieving the transfer data from Biwenger: ' + error);
         });
     }
@@ -27,16 +27,16 @@ class TransferRecorder {
         saveableObjs.forEach(saveableObj => {
             this.transferDao.create(saveableObj, (err, newDoc) => {
                 if (err) {
-                    console.log('Error while creating document: ' + err);
+                    console.log('Error while creating transfer document: ' + err);
                 } else {
-                    console.log('successfully created document with id: ' + newDoc.id);
+                    console.log('Successfully created transfer document with id: ' + newDoc.id);
                 }
             });
         });
     }
 
     _filterTransferDataAfterDate(pTransferData, pDate) {
-        return pTransferData.filter((transfer) => transfer.date * 1000 > pDate.getTime());
+        return pTransferData.filter(transfer => transfer.date * 1000 > pDate.getTime());
     }
 
     _buildSaveableObjects(pTransferData) {

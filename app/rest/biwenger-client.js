@@ -1,6 +1,6 @@
 const axios = require('axios');
 
-class BiwengerTransferClient {
+class BiwengerClient {
 
     constructor() {
         this.client = axios.create({
@@ -28,6 +28,20 @@ class BiwengerTransferClient {
            return response.data;
         });
     }
+
+    /**
+     * @returns Promise of Object Array containing the details of the users of the league
+     */
+    getLeagueUsers() {
+        return this.client.get('league', {
+            params: {
+                fields: 'standings'
+            }
+        })
+        .then(response => {
+            return response.data.data.standings;
+        });
+    }
 };
 
-module.exports = BiwengerTransferClient;
+module.exports = BiwengerClient;
