@@ -2,7 +2,7 @@
   "name": "biwengerbalance",
   "version": "0.0.1",
   "description": "Application to keep track of the users' balance in a Biwenger league",
-  "main": "app.js",
+  "main": "server.js",
   "scripts": {
     "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -15,6 +15,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "cron": "^1.4.0",
+    "express": "^4.16.3",
     "mongoose": "^5.2.9"
   }
 }
