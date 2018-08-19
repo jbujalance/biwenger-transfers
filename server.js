@@ -1,6 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const TransferAggregator = require('./app/db/transfer-aggregator');
+const BalanceAggregator = require('./app/db/balance-aggregator');
 const app = express();
 
 // Server connection to database
@@ -8,7 +8,7 @@ console.log('Server connecting to database...');
 mongoose.connect(process.env.DB_URI, { useNewUrlParser: true });
 
 // The aggregator that will provide the users balances
-var aggregator = new TransferAggregator();
+var aggregator = new BalanceAggregator();
 
 // Root page
 app.get('/', (req, res) => {
@@ -31,5 +31,6 @@ app.get('/api/balances', (req, res) => {
     });
 });
 
+// Listen on port provided by environment
 console.log('Server listening')
 app.listen(process.env.PORT);

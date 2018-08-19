@@ -1,6 +1,6 @@
 const User = require('../model/user');
 
-class TransferAggregator {
+class BalanceAggregator {
 
     constructor() {
     }
@@ -49,11 +49,11 @@ class TransferAggregator {
                 }
             }
         ], (err, res) => {
-            if (err) console.log('Error while calculating the gain aggregation: ' + err);
+            if (err) console.log('Error while calculating the balance aggregation: ' + err);
             else return res;
         });
     }
 
 }
 
-module.exports = TransferAggregator;
+module.exports = BalanceAggregator;
