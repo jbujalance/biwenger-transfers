@@ -16,7 +16,7 @@ app.get('/', (req, res) => {
 });
 
 // Serve balances in dedicated endpoint
-app.get('api/balances', (req, res) => {
+app.get('/api/balances', (req, res) => {
     aggregator.getUsersBalance()
     .then(balances => {
         console.log('Serving request: ' + req.url);
