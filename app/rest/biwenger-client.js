@@ -42,6 +42,24 @@ class BiwengerClient {
             return response.data.data.standings;
         });
     }
+
+    /**
+     * @param {Integer} pOffset the offset
+     * @param {Integer} pLimit the number of entries to retrieve
+     * @returns a Promise of an array of bonus entries
+     */
+    getBonuses(pOffset, pLimit) {
+        return this.client.get('league/board', {
+            params: {
+                type: 'bonus',
+                offset: pOffset,
+                limit: pLimit
+            }
+        })
+        .then(res => {
+            return res.data.data
+        });
+    }
 };
 
 module.exports = BiwengerClient;
