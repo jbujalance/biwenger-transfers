@@ -8,30 +8,30 @@ class TransferRecorder {
         this.transferDao = Transfer;
     };
 
-    recordNewTransfers() {
+    recordNewTransfers(pCallback) {
         var self = this;
         self.restClient.getMostRecentMovements(0, 10).then(response => {
             console.log('Found ' + response.data.length + ' recent transfer movements in Biwenger');
             self.transferDao.getMostRecentDate().then(date => {
                 console.log('Last recorded date is ' + date);
-                self._saveTransfersAfterDate(response.data, date);
+                self._saveTransfersAfterDate(response.data, date, pCallback);
             });
         }).catch(error => {
             console.log('Error while retrieving the transfer data from Biwenger: ' + error);
         });
     }
 
-    _saveTransfersAfterDate(pTransferData, pAfterDate) {
+    _saveTransfersAfterDate(pTransferData, pAfterDate, pCallback) {
         let saveableObjs = this._buildSaveableObjects(this._filterTransferDataAfterDate(pTransferData, pAfterDate));
         console.log(saveableObjs.length + ' transfer movements to save');
-        saveableObjs.forEach(saveableObj => {
-            this.transferDao.create(saveableObj, (err, newDoc) => {
-                if (err) {
-                    console.log('Error while creating transfer document: ' + err);
-                } else {
-                    console.log('Successfully created transfer document with id: ' + newDoc.id);
-                }
-            });
+        this.transferDao.create(saveableObjs, (err, newDocs) => {
+            if (err) {
+                console.log('Error while creating transfer documents: ' + err);
+                pCallback(err);
+            } else {
+                if (newDocs) console.log('Successfully created following transfer documents: ' + newDocs);
+                pCallback(newDocs);
+            }
         });
     }
 
