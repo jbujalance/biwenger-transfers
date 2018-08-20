@@ -10,7 +10,7 @@ class BonusRecorder {
 
     recordNewBonuses(pCallback) {
         let self = this;
-        this.restClient.getBonuses(0, 10).then(res => {
+        this.restClient.getBonuses(0, process.env.BONUS_RETRIEVAL_LIMIT || 5).then(res => {
             console.log('Found ' + res.length + ' recent bonuses entries in Biwenger');
             self.bonusDao.getMostRecentDate().then(date => {
                 console.log('Last recorded date is ' + date);

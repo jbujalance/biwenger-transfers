@@ -10,7 +10,7 @@ class TransferRecorder {
 
     recordNewTransfers(pCallback) {
         var self = this;
-        self.restClient.getMostRecentMovements(0, 10).then(response => {
+        self.restClient.getMostRecentMovements(0, process.env.TRANSFER_RETRIEVAL_LIMIT || 5).then(response => {
             console.log('Found ' + response.data.length + ' recent transfer movements in Biwenger');
             self.transferDao.getMostRecentDate().then(date => {
                 console.log('Last recorded date is ' + date);
