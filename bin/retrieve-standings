@@ -1,12 +1,12 @@
 #!/usr/bin/env node
 
 const mongoose = require('mongoose');
-const BonusRecorder = require('../app/worker/bonus-recorder');
+const StandingRecorder = require('../app/worker/standing-recorder');
 
 console.log('Openning MongoDB connection...');
 mongoose.connect(process.env.DB_URI, { useNewUrlParser: true });
 
-new BonusRecorder().recordNewBonuses(function() {
+new StandingRecorder().recordLastRound(function() {
     // Close Mongo connection when the documents have been saved in order to end the job
     console.log('Closing MongoDB connection...');
     mongoose.connection.close();

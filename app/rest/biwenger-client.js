@@ -11,11 +11,17 @@ class BiwengerClient {
                 'accept': 'application/json, text/plain, */*',
                 'authorization': process.env.BIWENGER_BEARER,
                 'x-version': process.env.BIWENGER_X_VERSION,
-                'x-league': process.env.BIWENGER_LEAGUE_ID
+                'x-league': process.env.BIWENGER_LEAGUE_ID,
+                'x-lang': 'es'
             }
         });
     }
 
+    /**
+     * Returns the most recent transfers.
+     * @param {Integer} pOffset the offset. Set to 0 to get the most recent transfers.
+     * @param {Integer} pLimit the number of transfers to return.
+     */
     getMostRecentMovements(pOffset, pLimit) {
         return this.client.get('league/board', {
             params: {
@@ -59,6 +65,34 @@ class BiwengerClient {
         .then(res => {
             return res.data.data
         });
+    }
+
+    /**
+     * Retrieve the given number of finished rounds.
+     * @param {Integer} pOffset the offset at which to start retrieving finished rounds
+     * @param {Integer} pLimit the number of finished rounds to retrieve
+     * @returns a Promies of an array of finished rounds
+     */
+    getRecentRounds(pOffset, pLimit) {
+        return this.client.get('league/board', {
+            params: {
+                type: 'roundFinished',
+                offset: pOffset,
+                limit: pLimit
+            }
+        })
+        .then(res => {
+            return res.data.data;
+        });
+    }
+
+    /**
+     * @returns the last finished round.
+     */
+    getLastFinishedRound() {
+        return this.getRecentRounds(0, 1).then(res => {
+            return res[0];
+        })
     }
 };
 
