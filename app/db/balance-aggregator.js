@@ -24,6 +24,13 @@ class BalanceAggregator {
                     as: "spendingTransfers"
                 }
             },{
+                $lookup: {
+                    from: "roundstandings",
+                    localField: "biwengerId",
+                    foreignField: "biwengerUserId",
+                    as: "roundBonuses"
+                }
+            },{
                 $project: {
                     "_id": 0,
                     "biwengerId": 1,
@@ -39,13 +46,20 @@ class BalanceAggregator {
                         $reduce: {
                             input: "$spendingTransfers",
                             initialValue: 0,
-                            in: { $add: ["$$value", "$$this.amount"] }
+                            in: { $subtract: ["$$value", "$$this.amount"] }
+                        }
+                    },
+                    "roundsBonus": {
+                        $reduce: {
+                            input: "$roundBonuses",
+                            initialValue: 0,
+                            in: { $add: ["$$value", "$$this.bonus"] }
                         }
                     }
                 }
             },{
                 $addFields: {
-                    "balance": { $subtract: ["$gain", "$spend"] }
+                    "balance": { $add: ["$gain", "$spend", "$roundsBonus"] }
                 }
             }
         ], (err, res) => {

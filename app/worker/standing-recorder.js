@@ -44,6 +44,7 @@ class StandingRecorder {
                     points: unitResult.points,
                     position: index + 1,
                     payment: 0,
+                    bonus: unitResult.bonus,
                     date: new Date(pBiwengerData.date * 1000)
                 }
                 saveableObjs.push(saveableObj);

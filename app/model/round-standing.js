@@ -7,6 +7,10 @@ var roundStanding = new mongoose.Schema({
     points: Number,
     position: Number,
     payment: Number,
+    bonus: {
+        type: Number,
+        default: 0
+    },
     date: Date
 });
 

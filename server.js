@@ -18,5 +18,5 @@ app.use('/', balanceRoutes);
 app.use('/', paymentRoutes);
 
 // Listen on port provided by environment
-console.log('Server listening')
+console.log('Server listening');
 app.listen(process.env.PORT);
