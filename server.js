@@ -8,6 +8,13 @@ const paymentRoutes = require('./app/routes/payment-route');
 console.log('Server connecting to database...');
 mongoose.connect(process.env.DB_URI, { useNewUrlParser: true });
 
+// Express configuration
+app.use(function(req, res, next) {
+    // TODO restrict the CORS once I'll know the frontend domain
+    res.header('Access-Control-Allow-Origin', '*');
+    next();
+});
+
 // Root page
 app.get('/', (req, res) => {
     res.send('Up and runnig :)');
