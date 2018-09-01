@@ -8,7 +8,11 @@ class BalanceAggregator {
     getUsersBalance() {
         return User.aggregate([
             {
-                $match: {}
+                $match: {
+                    'biwengerId': {
+                        $ne: -1
+                    }
+                }
             },{
                 $lookup: {
                     from: "transfers",
