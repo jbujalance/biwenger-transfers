@@ -31,7 +31,7 @@ Once the application is deployed and running, the endpoint **/api/balances** wil
         "spend": 19200216,
         "balance": -14824616
     },
-    {...}
+    {}
 ]
 ```
 
