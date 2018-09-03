@@ -15,6 +15,7 @@ The following environment variables are available to configure the application:
 * **DB_URI**: The URI to the MongoDB cluster where the documents will be stored. This URI contains the host and the credentials needed to connect to the database.
 * **PORT**: The HTTP port on which the API will be exposed. This variable is automatically set by Heroku.
 * **CORS_DOMAIN**: The allowed domain for CORS restriction. This should be restricted to the domain of the fornt-end app. This variable is **optional** and the default value is '*' to allow requests from any domain.
+* **JWT_SECRET**: The JWT secret to generate the JWT for user autentication.
 
 ## Deployment on Heroku
 The server is deployed in a Heroku web dyno, from which it exposes the Balances endpoint. The scripts in the folder *./bin* are scheduled as CRON jobs with the Heroku scheduler to run periodically.
