@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const PaymentAggregator = require('../db/payment-aggregator');
+const PaymentAggregator = require('../aggregators/payment-aggregator');
 const aggregator = new PaymentAggregator();
 
 router.get('/api/payments', (req, res) => {

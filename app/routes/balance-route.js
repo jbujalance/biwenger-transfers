@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const BalanceAggregator = require('../db/balance-aggregator');
+const BalanceAggregator = require('../aggregators/balance-aggregator');
 const aggregator = new BalanceAggregator();
 
 router.get('/api/balances', (req, res) => {
