@@ -16,7 +16,10 @@ class BonusRecorder {
                 console.log('Last recorded date is ' + date);
                 self._saveBonusesAfterDate(res, date, pCallback);
             });
-        }).catch(err => console.log('Error while retrieving the bonuses from Biwenger: ' + err));
+        }).catch(err => {
+            console.log('Error while retrieving the bonuses from Biwenger: ' + err);
+            pCallback(err);
+        });
     }
 
     _saveBonusesAfterDate(pBonusArray, pAfterDate, pCallback) {

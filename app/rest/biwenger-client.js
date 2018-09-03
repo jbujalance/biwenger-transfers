@@ -5,7 +5,7 @@ class BiwengerClient {
     constructor() {
         this.client = axios.create({
             baseURL: 'https://biwenger.as.com/api/v2/',
-            timeout: 1000,
+            timeout: 10000,
             headers: {
                 'content-type': 'application/json; charset=utf-8',
                 'accept': 'application/json, text/plain, */*',

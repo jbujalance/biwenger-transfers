@@ -18,6 +18,7 @@ class TransferRecorder {
             });
         }).catch(error => {
             console.log('Error while retrieving the transfer data from Biwenger: ' + error);
+            pCallback(error);
         });
     }
 
