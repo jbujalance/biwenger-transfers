@@ -1,19 +1,20 @@
 const express = require('express');
-const mongoose = require('mongoose');
 const app = express();
+const passport = require('passport');
 const balanceRoutes = require('./app/routes/balance-route');
 const paymentRoutes = require('./app/routes/payment-route');
-
-// Server connection to database
-console.log('Server connecting to database...');
-mongoose.connect(process.env.DB_URI, { useNewUrlParser: true });
+require('./app/db/db-config');
+require('./app/config/passport');
 
 // Express configuration
+//// CORS configuration
 app.use(function(req, res, next) {
     let domain = process.env.CORS_DOMAIN || '*';
     res.header('Access-Control-Allow-Origin', domain);
     next();
 });
+//// Passport configuration
+app.use(passport.initialize());
 
 // Root page
 app.get('/', (req, res) => {
