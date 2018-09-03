@@ -10,8 +10,8 @@ mongoose.connect(process.env.DB_URI, { useNewUrlParser: true });
 
 // Express configuration
 app.use(function(req, res, next) {
-    // TODO restrict the CORS once I'll know the frontend domain
-    res.header('Access-Control-Allow-Origin', '*');
+    let domain = process.env.CORS_DOMAIN || '*';
+    res.header('Access-Control-Allow-Origin', domain);
     next();
 });
 
