@@ -1,4 +1,4 @@
-const User = require('../model/user');
+const BiwengerUser = require('../model/biwenger-user');
 
 class BalanceAggregator {
 
@@ -6,7 +6,7 @@ class BalanceAggregator {
     }
 
     getUsersBalance() {
-        return User.aggregate([
+        return BiwengerUser.aggregate([
             {
                 $match: {
                     'biwengerId': {

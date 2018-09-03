@@ -1,10 +1,10 @@
-const User = require('../model/user');
+const BiwengerUser = require('../model/user');
 const BiwengerClient = require('../rest/biwenger-client');
 
 class UsersInitializer {
     
     constructor() {
-        this.userDao = User;
+        this.userDao = BiwengerUser;
         this.biwengerClient = new BiwengerClient();
     }
 
