@@ -3,7 +3,7 @@ const app = express();
 const passport = require('passport');
 const balanceRoutes = require('./app/routes/balance-route');
 const paymentRoutes = require('./app/routes/payment-route');
-require('./app/db/db-config');
+require('./app/config/db-config');
 require('./app/config/passport');
 
 // Express configuration
