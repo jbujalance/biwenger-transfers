@@ -10,11 +10,9 @@ const express = require('express');
 const app = express();
 const passport = require('passport');
 const bodyParser = require('body-parser');
-const balanceRoutes = require('./app/routes/balance-route');
-const paymentRoutes = require('./app/routes/payment-route');
-const authRoutes = require('./app/routes/auth-route');
 require('./app/config/db-config');
 require('./app/config/passport');
+const routeConfigurator = require('./app/routes/configure-routes');
 
 // Express configuration
 //// CORS configuration
@@ -29,15 +27,8 @@ app.use(passport.initialize());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-// Root page
-app.get('/', (req, res) => {
-    res.send('Up and runnig :)');
-});
-
 // Routes
-app.use('/', balanceRoutes);
-app.use('/', paymentRoutes);
-app.use('/', authRoutes);
+routeConfigurator.configureRoutes(app);
 
 // Listen on port provided by environment
 console.log('Server listening');
