@@ -4,7 +4,7 @@ const aggregator = new PaymentAggregator();
 module.exports.getPayments = function (req, res) {
     aggregator.getUsersPayment()
     .then(payments => {
-        console.log('Serving request: ' + req.url);
+        console.log('Serving request: ' + req.url + ' to user ' + req.jwtPayload.email);
         res.send(payments);
     })
     .catch(err => {

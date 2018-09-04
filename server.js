@@ -29,6 +29,13 @@ app.use(function (err, req, res, next) {
       res.send({ message: err.message });
     }
 });
+// Error handling for unauthorized access
+app.use(function (err, req, res, next) {
+    if (err.code === 'permission_denied') {
+      res.status(403);
+      res.send({ message: err.message });
+    }
+});
 
 // Listen on port provided by environment
 console.log('Server listening');

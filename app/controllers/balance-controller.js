@@ -4,7 +4,7 @@ const aggregator = new BalanceAggregator();
 module.exports.getBalances = function (req, res) {
     aggregator.getUsersBalance()
     .then(balances => {
-        console.log('Serving request: ' + req.url);
+        console.log('Serving request: ' + req.url + ' to user ' + req.jwtPayload.email);
         res.send(balances);
     })
     .catch(err => {
