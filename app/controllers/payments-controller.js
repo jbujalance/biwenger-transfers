@@ -1,11 +1,10 @@
-const router = require('express').Router();
-const PaymentAggregator = require('../db/payment-aggregator');
+const PaymentAggregator = require('../aggregators/payment-aggregator');
 const aggregator = new PaymentAggregator();
 
-router.get('/api/payments', (req, res) => {
+module.exports.getPayments = function (req, res) {
     aggregator.getUsersPayment()
     .then(payments => {
-        console.log('Serving request: ' + req.url);
+        console.log('Serving request: ' + req.url + ' to user ' + req.jwtPayload.email);
         res.send(payments);
     })
     .catch(err => {
@@ -15,6 +14,4 @@ router.get('/api/payments', (req, res) => {
             message: error
         });
     })
-});
-
-module.exports = router;
+}

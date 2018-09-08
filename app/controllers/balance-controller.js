@@ -1,11 +1,10 @@
-const router = require('express').Router();
-const BalanceAggregator = require('../db/balance-aggregator');
+const BalanceAggregator = require('../aggregators/balance-aggregator');
 const aggregator = new BalanceAggregator();
 
-router.get('/api/balances', (req, res) => {
+module.exports.getBalances = function (req, res) {
     aggregator.getUsersBalance()
     .then(balances => {
-        console.log('Serving request: ' + req.url);
+        console.log('Serving request: ' + req.url + ' to user ' + req.jwtPayload.email);
         res.send(balances);
     })
     .catch(err => {
@@ -15,6 +14,4 @@ router.get('/api/balances', (req, res) => {
             message: error
         });
     })
-});
-
-module.exports = router;
+};

@@ -1,28 +1,18 @@
 const express = require('express');
-const mongoose = require('mongoose');
 const app = express();
-const balanceRoutes = require('./app/routes/balance-route');
-const paymentRoutes = require('./app/routes/payment-route');
+const expressConfig = require('./app/config/express-config');
+require('./app/config/db-config');
+require('./app/config/passport');
+const routes = require('./app/routes/index');
+const postMiddlewareConfigurator = require('./app/config/post-middleware');
 
-// Server connection to database
-console.log('Server connecting to database...');
-mongoose.connect(process.env.DB_URI, { useNewUrlParser: true });
-
-// Express configuration
-app.use(function(req, res, next) {
-    let domain = process.env.CORS_DOMAIN || '*';
-    res.header('Access-Control-Allow-Origin', domain);
-    next();
-});
-
-// Root page
-app.get('/', (req, res) => {
-    res.send('Up and runnig :)');
-});
+// Express config
+expressConfig.configure(app);
 
 // Routes
-app.use('/', balanceRoutes);
-app.use('/', paymentRoutes);
+app.use('/', routes);
+
+postMiddlewareConfigurator.configure(app);
 
 // Listen on port provided by environment
 console.log('Server listening');
