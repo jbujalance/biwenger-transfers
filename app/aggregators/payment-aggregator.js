@@ -32,6 +32,10 @@ class PaymentAggregator {
                         }
                     }
                 }
+            },{
+                $sort: {
+                    payment: 1
+                }
             }
         ]);
     }
