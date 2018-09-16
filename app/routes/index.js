@@ -32,6 +32,6 @@ router.get('/api/balances', auth, guard.check('balances'), balanceController.get
 router.get('/api/payments', auth, paymentController.getPayments);
 
 // Standings
-router.get('/api/standings', auth, standingController.getStandings);
+router.get('/api/rounds', auth, standingController.getStandings);
 
 module.exports = router;
