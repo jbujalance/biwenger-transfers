@@ -65,6 +65,10 @@ class BalanceAggregator {
                 $addFields: {
                     "balance": { $add: ["$gain", "$spend", "$roundsBonus"] }
                 }
+            },{
+                $sort: {
+                    balance: -1
+                }
             }
         ], (err, res) => {
             if (err) console.log('Error while calculating the balance aggregation: ' + err);
