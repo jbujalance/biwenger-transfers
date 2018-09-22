@@ -4,6 +4,7 @@ const jwtPermissions = require('express-jwt-permissions');
 const authController = require('../controllers/auth-controller');
 const balanceController = require('../controllers/balance-controller');
 const paymentController = require('../controllers/payments-controller');
+const standingController = require('../controllers/standings-controller');
 
 var auth = jwt({
     secret: process.env.JWT_SECRET,
@@ -29,5 +30,8 @@ router.get('/api/balances', auth, guard.check('balances'), balanceController.get
 
 // Payments
 router.get('/api/payments', auth, paymentController.getPayments);
+
+// Standings
+router.get('/api/rounds', auth, standingController.getStandings);
 
 module.exports = router;
