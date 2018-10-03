@@ -52,7 +52,7 @@ class BonusRecorder {
         let modelObjs = [];
         pBiwengerBonusObj.content.forEach(unitBonus => {
             let modelObj = {
-                userId: unitBonus.user.id,
+                biwengerUserId: unitBonus.user.id,
                 amount: unitBonus.amount,
                 reason: unitBonus.reason,
                 date: new Date(pBiwengerBonusObj.date * 1000)
