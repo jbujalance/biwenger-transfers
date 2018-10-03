@@ -6,6 +6,7 @@ module.exports.configure = function (app) {
         res.send({ message: err.message });
         }
     });
+
     // Error handling for unauthorized access
     app.use(function (err, req, res, next) {
         if (err.code === 'permission_denied') {
