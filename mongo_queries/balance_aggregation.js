@@ -16,19 +16,19 @@ db.getCollection('biwengerusers').aggregate([
             as: "spendingTransfers"
         }
     },{
-
         $lookup: {
-
             from: "roundstandings",
-
             localField: "biwengerId",
-
             foreignField: "biwengerUserId",
-
             as: "roundBonuses"
-
         }
-
+    },{
+        $lookup: {
+            from: "bonus",
+            localField: "biwengerId",
+            foreignField: "biwengerUserId",
+            as: "bonuses"
+        }
     },{
         $project: {
             "_id": 0,
@@ -48,24 +48,24 @@ db.getCollection('biwengerusers').aggregate([
                     in: { $subtract: ["$$value", "$$this.amount"] }
                 }
             },
-
             "roundsBonus": {
-
                 $reduce: {
-
                     input: "$roundBonuses",
-
                     initialValue: 0,
-
                     in: { $add: ["$$value", "$$this.bonus"] }
-
                 }
-
+            },
+            "adminBonus": {
+                $reduce: {
+                    input: "$bonuses",
+                    initialValue: 0,
+                    in: { $add: ["$$value", "$$this.amount"] }
+                }
             }
         }
     },{
         $addFields: {
-            "balance": { $add: ["$gain", "$spend", "$roundsBonus"] }
+            "balance": { $add: ["$gain", "$spend", "$roundsBonus", "$adminBonus"] }
         }
     }
 ])

@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 var bonus = new mongoose.Schema({
-    userId: Number,
+    biwengerUserId: Number,
     amount: Number,
     reason: String,
     date: Date
