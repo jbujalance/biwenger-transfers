@@ -97,13 +97,16 @@ class BiwengerClient {
 
     /**
      * Posts admin bonus.
-     * @param {Object} pBonus the bonus to set to each user
-     * @property {String} pBonus.reason The bonus reason
-     * @property {Object} pBonus.amount The map of Biwenger user Ids and quantity to set as a bonus to each player
+     * @param {String} pReason The bonus reason
+     * @param {Object} pAmounts The map of Biwenger user Ids and quantity to set as a bonus to each player
      * @returns {Promise<Oject>} a Promise of the result of the request, something like 200 OK.
      */
-    postBonus(pBonus) {
-        return this.client.post('admin/bonus', pBonus).then(res => {
+    postBonus(pReason, pAmounts) {
+        let postObj = {
+            'reason': pReason,
+            'amount': pAmounts
+        }
+        return this.client.post('admin/bonus', postObj).then(res => {
             return res;
         });
     }
