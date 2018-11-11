@@ -71,7 +71,7 @@ class BiwengerClient {
      * Retrieve the given number of finished rounds.
      * @param {Integer} pOffset the offset at which to start retrieving finished rounds
      * @param {Integer} pLimit the number of finished rounds to retrieve
-     * @returns a Promies of an array of finished rounds
+     * @returns a Promise of an array of finished rounds
      */
     getRecentRounds(pOffset, pLimit) {
         return this.client.get('league/board', {
@@ -92,7 +92,23 @@ class BiwengerClient {
     getLastFinishedRound() {
         return this.getRecentRounds(0, 1).then(res => {
             return res[0];
-        })
+        });
+    }
+
+    /**
+     * Posts admin bonus.
+     * @param {String} pReason The bonus reason
+     * @param {Object} pAmounts The map of Biwenger user Ids and quantity to set as a bonus to each player
+     * @returns {Promise<Oject>} a Promise of the result of the request, something like 200 OK.
+     */
+    postBonus(pReason, pAmounts) {
+        let postObj = {
+            'reason': pReason,
+            'amount': pAmounts
+        }
+        return this.client.post('admin/bonus', postObj).then(res => {
+            return res;
+        });
     }
 };
 

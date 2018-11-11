@@ -34,5 +34,9 @@ db.getCollection('roundstandings').aggregate([
                 }
             }
         }
+    },{
+        $sort: {
+            date: -1
+        }
     }
 ])

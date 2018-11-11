@@ -2,6 +2,7 @@ const BiwengerClient = require('../rest/biwenger-client');
 const RoundStanding = require('../model/round-standing');
 const PositionDecorator = require('../decorator/position-decorator');
 const PaymentDecorator = require('../decorator/payment-decorator');
+const BonusAdjuster = require('../decorator/bonus-adjustment');
 
 class StandingRecorder {
 
@@ -10,6 +11,7 @@ class StandingRecorder {
         this.standingDao = RoundStanding;
         this.positionDecorator = new PositionDecorator();
         this.paymentDecorator = new PaymentDecorator();
+        this.bonusAdjuster = new BonusAdjuster();
     }
 
     recordLastRound(pCallback) {
@@ -45,12 +47,16 @@ class StandingRecorder {
                     position: index + 1,
                     payment: 0,
                     bonus: unitResult.bonus,
-                    date: new Date(pBiwengerData.date * 1000)
+                    date: new Date(pBiwengerData.date * 1000),
+                    // The value 'bonusReasons' is not mapped in the Mongoose RoundStanding schema, but it is needed for the bonus adjustment.
+                    // As long as the Mongoose schema is in 'strict' mode, this value will not be saved in the database.
+                    bonusReasons: unitResult.reason
                 }
                 saveableObjs.push(saveableObj);
             });
             this.positionDecorator.decorate(saveableObjs);
             this.paymentDecorator.decorate(saveableObjs);
+            this.bonusAdjuster.adjustBonuses(saveableObjs);
             return saveableObjs;
         });
     }

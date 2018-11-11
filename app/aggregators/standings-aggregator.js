@@ -41,6 +41,10 @@ class StandingsAggregator {
                         }
                     }
                 }
+            },{
+                $sort: {
+                    date: -1
+                }
             }
         ], (err, res) => {
             if (err) console.log('Error while aggregating the round standings: ' + err);
