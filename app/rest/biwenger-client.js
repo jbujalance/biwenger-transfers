@@ -63,7 +63,7 @@ class BiwengerClient {
             }
         })
         .then(res => {
-            return res.data.data
+            return res.data.data;
         });
     }
 
@@ -108,6 +108,21 @@ class BiwengerClient {
         }
         return this.client.post('admin/bonus', postObj).then(res => {
             return res;
+        });
+    }
+
+    /**
+     * Returns the name of the player whose Id is given.
+     * @param {Integer} pId The player Id whose name is to be returned.
+     * @returns {Promise<String>} a Promise of the name of the player with the given Id.
+     */
+    getPlayerNameById(pId) {
+        return this.client.get('players/la-liga/' + pId, {
+            params: {
+                fields: 'name'
+            }
+        }).then(res => {
+            return res.data.data.name;
         });
     }
 };
