@@ -125,6 +125,31 @@ class BiwengerClient {
             return res.data.data.name;
         });
     }
+
+    /**
+     * Consult the number of bids on a given player.
+     * @param {Integer} pPlayerId The Id of the playere for which to consult the number of bids.
+     * @returns {Promise<Integer>} The number of bids to the given player.
+     */
+    getPlayerNumberOfBids(pPlayerId) {
+        return this.client.get('market/bids', {
+            params: {
+                player: pPlayerId
+            }
+        }).then(res => {
+            return res.data.data;
+        });
+    }
+
+    /**
+     * Consults the players that are available for sale in the market.
+     * @returns {Promise<Object[]>} An array of objects containing some information about the players for sale in the market.
+     */
+    getMarketSales() {
+        return this.client.get('market').then(res => {
+            return res.data.data.sales;
+        });
+    }
 };
 
 module.exports = BiwengerClient;
