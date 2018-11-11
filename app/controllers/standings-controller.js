@@ -11,7 +11,7 @@ module.exports.getStandings = function (req, res) {
         console.log(err);
         res.send({
             status: 'error',
-            message: error
+            message: err
         });
     })
 }
