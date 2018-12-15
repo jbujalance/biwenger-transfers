@@ -7,6 +7,7 @@ const balanceController = require('../controllers/balance-controller');
 const paymentController = require('../controllers/payments-controller');
 const standingController = require('../controllers/standings-controller');
 const marketController = require('../controllers/market-controller');
+const adminController = require('../controllers/admin-controller');
 
 // Decodes the Authorization header and set the payload of the JWT to the request.
 var auth = jwt({
@@ -48,5 +49,8 @@ router.get('/api/rounds', auth, trackActivity, standingController.getStandings);
 
 // Market
 router.get('/api/market', auth, trackActivity, marketController.getMarketSales);
+
+// Admin
+router.get('/api/admin', auth, guard.check('admin'), trackActivity, adminController.getUsers);
 
 module.exports = router;
