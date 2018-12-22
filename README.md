@@ -24,7 +24,7 @@ The server is deployed in a Heroku web dyno, from which it exposes the Balances 
 To run locally in a dev environment, the project makes use of the `.dotenv` tool.
 Use the following command to run the server loading the environment variables from the not-committed `.env` file:
 ```
-node -r dotenv/config server.js
+npm run start-dev
 ```
 
 ## Usage
