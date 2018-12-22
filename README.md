@@ -20,6 +20,13 @@ The following environment variables are available to configure the application:
 ## Deployment on Heroku
 The server is deployed in a Heroku web dyno, from which it exposes the Balances endpoint. The scripts in the folder *./bin* are scheduled as CRON jobs with the Heroku scheduler to run periodically.
 
+## Run locally
+To run locally in a dev environment, the project makes use of the `.dotenv` tool.
+Use the following command to run the server loading the environment variables from the not-committed `.env` file:
+```
+npm run start-dev
+```
+
 ## Usage
 Once the application is deployed and running, the endpoint **/api/balances** will provide the balances of all the users in the league in the following format:
 
