@@ -19,11 +19,11 @@ module.exports.register = function (req, res) {
     user.setPassword(req.body.password);
     user.save(function(err) {
         if (err) {
-            sendJsonResponse(res, 401, { 'message': 'Error while trying to register user: ' + err })
+            sendJsonResponse(res, 500, { 'message': 'Error while trying to register user: ' + err });
             return;
         }
         let token = user.generateJwt();
-        sendJsonResponse(res, 200, { 'token': token })
+        sendJsonResponse(res, 200, { 'token': token });
     });
 };
 

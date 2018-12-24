@@ -8,6 +8,7 @@ const paymentController = require('../controllers/payments-controller');
 const standingController = require('../controllers/standings-controller');
 const marketController = require('../controllers/market-controller');
 const adminController = require('../controllers/admin-controller');
+const pushSubController = require('../controllers/push-subscription-controller');
 
 // Decodes the Authorization header and set the payload of the JWT to the request.
 var auth = jwt({
@@ -37,6 +38,9 @@ router.get('/', (req, res) => {
 // Authentication
 router.post('/api/user/register', authController.register);
 router.post('/api/user/login', authController.login);
+
+// Push subscriptions
+router.post('/api/push/subscribe', auth, pushSubController.subscribe);
 
 // Balances
 router.get('/api/balances', auth, guard.check('balances'), trackActivity, balanceController.getBalances);

@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 const mongoose = require('mongoose');
-const StandingRecorder = require('../app/worker/standing-recorder');
+const StandingRecorder = require('../app/service/standing-recorder');
 
 console.log('Openning MongoDB connection...');
 mongoose.connect(process.env.DB_URI, { useNewUrlParser: true });
