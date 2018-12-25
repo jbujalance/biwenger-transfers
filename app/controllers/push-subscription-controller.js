@@ -5,8 +5,17 @@ function sendJsonResponse(res, status, content) {
     res.json(content);
 };
 
+function requestBodyIsNotValid(pBody) {
+    return !pBody.userId
+        || !pBody.subscription
+        || !pBody.subscription.endpoint
+        || !pBody.subscription.keys
+        || !pBody.subscription.keys.p256dh
+        || !pBody.subscription.keys.auth;
+};
+
 module.exports.subscribe = function (req, res) {
-    if (!req.body.userId || !req.body.endpoint || !req.body.keys || !req.body.keys.p256dh || !req.body.keys.auth) {
+    if (requestBodyIsNotValid(req.body)) {
         sendJsonResponse(res, 400, {'message': 'The request body is not valid: Missing fields for a valid push subscription'});
         return;
     }
@@ -15,7 +24,8 @@ module.exports.subscribe = function (req, res) {
     pushSubscription.save(err => {
         if (err) {
             sendJsonResponse(res, 500, { 'message': 'Error while trying to register the subscription: ' + err });
+        } else {
+            sendJsonResponse(res, 200, {'message': 'Subscription successfuly registered'});
         }
-        sendJsonResponse(res, 200, {'message': 'Subscription successfuly registered'});
     });
 };

@@ -1,12 +1,13 @@
 const mongoose = require('mongoose');
 
 var pushSubscription = new mongoose.Schema({
-    userId: Number,
-    endpoint: String,
-    expirationTime: Number,
-    keys: {
-        p256dh: String,
-        auth: String
+    userId: String,
+    subscription: {
+        endpoint: String,
+        keys: {
+            p256dh: String,
+            auth: String
+        }
     }
 });
 
