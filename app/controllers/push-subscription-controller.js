@@ -11,7 +11,8 @@ function requestBodyIsNotValid(pBody) {
         || !pBody.subscription.endpoint
         || !pBody.subscription.keys
         || !pBody.subscription.keys.p256dh
-        || !pBody.subscription.keys.auth;
+        || !pBody.subscription.keys.auth
+        || !pBody.device;
 };
 
 module.exports.subscribe = function (req, res) {
