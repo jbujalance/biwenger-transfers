@@ -17,19 +17,16 @@ class StandingRecorder {
     recordLastRound(pCallback) {
         this.restClient.getLastFinishedRound().then(res => {
             this._buildSaveableObjects(res).then(saveableObjs => {
-                console.log(saveableObjs.length + ' new standings to save.');
-                this.standingDao.create(saveableObjs, (err, newDocs) => {
-                    if (err) {
-                        console.log('Error while creating standings documents: ' + err);
-                        pCallback(err);
-                    } else {
-                        if (newDocs) console.log('Successfully created following standing documents: ' + newDocs);
-                        pCallback(newDocs);
-                    }
-                });
+                if (saveableObjs.length > 0) {
+                    console.log(saveableObjs.length + ' new standings to save.');
+                    this._saveInDatabase(saveableObjs, pCallback);
+                } else {
+                    console.log('There are not new standings to record.');
+                    pCallback();
+                }
             });
         }).catch(err => {
-            console.log('Error while retrieving last finished round from Biwenger: ' + err);
+            console.error('Error while retrieving last finished round from Biwenger: ' + err);
             pCallback(err);
         });
     }
@@ -60,6 +57,27 @@ class StandingRecorder {
             this.bonusAdjuster.adjustBonuses(saveableObjs);
             return saveableObjs;
         });
+    }
+
+    _saveInDatabase(pSaveableObjs, pCallback) {
+        this.standingDao.create(pSaveableObjs, (err, newDocs) => {
+            if (err) {
+                console.error('Error while creating standings documents: ' + err);
+                pCallback(err);
+            } else {
+                console.log('Successfully created following transfer documents: ' + newDocs);
+                // TODO call the PaymentAggregator here to retrieve the global payments and post them in the league board, then call the callback
+                pCallback(newDocs);
+            }
+        });
+    }
+
+    /**
+     * Retrieves the global payments of the users and post them in the league board.
+     * @param {Function} pFinishCallback The final callback, commonly the database disconnection.
+     */
+    _retrieveAndPostPaymentsOnLeagueBoard(pFinishCallback) {
+
     }
 }
 
