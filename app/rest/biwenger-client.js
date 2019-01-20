@@ -113,6 +113,19 @@ class BiwengerClient {
     }
 
     /**
+     * Posts a message on the league board.
+     * @param {Object} pMessage The message to be posted. This object is expected to have two properties:
+     * @property {String} pMessage.title The post title
+     * @property {String} pMessage.content The post content
+     * @returns {Promise<Object>} a Promise of the posted message
+     */
+    postBoardMessage(pMessage) {
+        return this.client.post('league/board', pMessage).then(response => {
+            return response;
+        });
+    }
+
+    /**
      * Returns the name of the player whose Id is given.
      * @param {Integer} pId The player Id whose name is to be returned.
      * @returns {Promise<String>} a Promise of the name of the player with the given Id.
