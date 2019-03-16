@@ -10,7 +10,7 @@ class BiwengerClient {
                 'content-type': 'application/json; charset=utf-8',
                 'accept': 'application/json, text/plain, */*',
                 'authorization': process.env.BIWENGER_BEARER,
-                'x-version': process.env.BIWENGER_X_VERSION,
+                'x-version': process.env.BIWENGER_X_VERSION || '',
                 'x-league': process.env.BIWENGER_LEAGUE_ID,
                 'x-lang': 'es'
             }
