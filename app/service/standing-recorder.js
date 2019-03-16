@@ -66,7 +66,7 @@ class StandingRecorder {
                 pCallback(err);
             } else {
                 console.log('Successfully created following transfer documents: ' + newDocs);
-                // TODO call the PaymentAggregator here to retrieve the global payments and post them in the league board, then call the callback
+                // TODO call the PaymentAggregator here to retrieve the global payments and post them in the league board, then call the callback to close the db connection
                 pCallback(newDocs);
             }
         });
