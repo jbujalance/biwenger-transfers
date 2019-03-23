@@ -12,6 +12,7 @@ class BiwengerClient {
                 'authorization': process.env.BIWENGER_BEARER,
                 'x-version': process.env.BIWENGER_X_VERSION || '',
                 'x-league': process.env.BIWENGER_LEAGUE_ID,
+                'x-user': process.env.BIWENGER_X_USER,
                 'x-lang': 'es'
             }
         });
