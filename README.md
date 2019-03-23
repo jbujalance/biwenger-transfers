@@ -10,6 +10,7 @@ The following environment variables are available to configure the application:
 * **BIWENGER_BEARER**: The identification bearer of the Biwenger account that will be used for querying the Biwenger API.
 * **BIWENGER_LEAGUE_ID**: The id of the Biwenger league that will be tracked.
 * **BIWENGER_X_VERSION**: The version of the Biwenger API to use. This variable is **optional**. If it is not defined, the latest API version will be used. Thus, it is recommended to omit this variable.
+* **BIWENGER_X_USER**: The Biwenger user id. This parameter is needed since March 2019.
 * **BONUS_RETRIEVAL_LIMIT**: The number of Bonus entries to retrieve in every tracking check. This variable is **optional** and the default values is *5*. 
 * **TRANSFER_RETRIEVAL_LIMIT**: The number of TRansfer entries to retrieve in every tracking check. This variable is **optional** and the default values is *5*.
 * **DB_URI**: The URI to the MongoDB cluster where the documents will be stored. This URI contains the host and the credentials needed to connect to the database.
