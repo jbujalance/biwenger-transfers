@@ -11,7 +11,8 @@ var roundStanding = new mongoose.Schema({
         type: Number,
         default: 0
     },
-    date: Date
+    date: Date,
+    seasonKey: Number
 });
 
 /**
