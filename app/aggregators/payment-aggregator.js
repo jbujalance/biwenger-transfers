@@ -4,13 +4,14 @@ class PaymentAggregator {
     constructor() {
     }
 
-    getUsersPayment() {
+    getUsersPayment(season) {
         return BiwengerUser.aggregate([
             {
                 $match: { 
                     'biwengerId': {
                         $ne: -1
-                    }
+                    },
+                    'seasons' : season
                 }
             },{
                 $lookup: {
