@@ -4,10 +4,12 @@ class StandingsAggregator {
     constructor() {
     }
 
-    getRoundStandings() {
+    getRoundStandings(season) {
         return RoundStanding.aggregate([
             {
-                $match: { }
+                $match: {
+                    'seasonKey': season
+                }
             },{
                 $lookup: {
                     from: "biwengerusers",
