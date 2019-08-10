@@ -5,13 +5,14 @@ class BalanceAggregator {
     constructor() {
     }
 
-    getUsersBalance() {
+    getUsersBalance(season) {
         return BiwengerUser.aggregate([
             {
                 $match: {
                     'biwengerId': {
                         $ne: -1
-                    }
+                    },
+                    'seasons': season
                 }
             },{
                 $lookup: {
