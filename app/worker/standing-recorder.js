@@ -50,7 +50,8 @@ class StandingRecorder {
                     date: new Date(pBiwengerData.date * 1000),
                     // The value 'bonusReasons' is not mapped in the Mongoose RoundStanding schema, but it is needed for the bonus adjustment.
                     // As long as the Mongoose schema is in 'strict' mode, this value will not be saved in the database.
-                    bonusReasons: unitResult.reason
+                    bonusReasons: unitResult.reason,
+                    seasonKey: process.env.CURRENT_SEASON_KEY
                 }
                 saveableObjs.push(saveableObj);
             });
