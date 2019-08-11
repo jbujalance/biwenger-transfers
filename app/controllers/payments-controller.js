@@ -2,7 +2,7 @@ const PaymentAggregator = require('../aggregators/payment-aggregator');
 const aggregator = new PaymentAggregator();
 
 module.exports.getPayments = function (req, res) {
-    aggregator.getUsersPayment(req.query.season)
+    aggregator.getUsersPayment(parseInt(req.query.season))
     .then(payments => {
         console.log('Serving request: ' + req.url + ' to user ' + req.jwtPayload.email);
         res.send(payments);
