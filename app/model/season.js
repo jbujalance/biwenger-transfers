@@ -8,10 +8,10 @@ var season = new mongoose.Schema({
 });
 
 /**
- * @returns The current season, ie, the season that has the greatest key.
+ * @returns A query returning the current season, ie, the season that has the greatest key.
  */
 season.statics.getCurrentSeason = function() {
-    return this.find().sort({'key': -1}).limit(1);
+    return this.findOne({}).sort({'key': -1});
 }
 
 module.exports = mongoose.model('Season', season);

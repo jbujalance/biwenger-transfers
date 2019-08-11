@@ -8,6 +8,7 @@ const paymentController = require('../controllers/payments-controller');
 const standingController = require('../controllers/standings-controller');
 const marketController = require('../controllers/market-controller');
 const adminController = require('../controllers/admin-controller');
+const seasonController = require('../controllers/seasons-controller');
 
 // Decodes the Authorization header and set the payload of the JWT to the request.
 var auth = jwt({
@@ -29,7 +30,7 @@ var trackActivity = function (req, res, next) {
     next();
 }
 
-// Home page
+// Root
 router.get('/', (req, res) => {
     res.send('Up and runnig :)');
 });
@@ -49,6 +50,10 @@ router.get('/api/rounds', auth, trackActivity, standingController.getStandings);
 
 // Market
 router.get('/api/market', auth, trackActivity, marketController.getMarketSales);
+
+// Seasons
+router.get('/api/seasons', auth, trackActivity, seasonController.getSeasons);
+router.get('/api/seasons/current', auth, trackActivity, seasonController.getCurrentSeason);
 
 // Admin
 router.get('/api/admin', auth, guard.check('admin'), trackActivity, adminController.getUsers);
