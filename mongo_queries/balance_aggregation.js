@@ -1,32 +1,78 @@
 db.getCollection('biwengerusers').aggregate([
     {
-        $match: {}
+        $match: {
+            'seasons': 2018
+        }
     },{
         $lookup: {
             from: "transfers",
-            localField: "biwengerId",
-            foreignField: "from",
+            let: { biwengerUserId: "$biwengerId" },
+            pipeline: [
+                {
+                    $match: {
+                        $expr: {
+                            $and: [
+                                { $eq: ["$from", "$$biwengerUserId"] },
+                                { $eq: ["$seasonKey", 2018] }
+                            ]
+                        }
+                    }
+                }
+            ],
             as: "gainTransfers"
         }
     },{
         $lookup: {
             from: "transfers",
-            localField: "biwengerId",
-            foreignField: "to",
+            let: { biwengerUserId: "$biwengerId" },
+            pipeline: [
+                {
+                    $match: {
+                        $expr: {
+                            $and: [
+                                { $eq: ["$to", "$$biwengerUserId"] },
+                                { $eq: ["$seasonKey", 2018] }
+                            ]
+                        }
+                    }
+                }
+            ],
             as: "spendingTransfers"
         }
     },{
         $lookup: {
             from: "roundstandings",
-            localField: "biwengerId",
-            foreignField: "biwengerUserId",
+            let: { userId: "$biwengerId" },
+            pipeline: [
+                {
+                    $match: {
+                        $expr: {
+                            $and: [
+                                { $eq: ["$biwengerUserId", "$$userId"] },
+                                { $eq: ["$seasonKey", 2018] }
+                            ]
+                        }
+                    }
+                }
+            ],
             as: "roundBonuses"
         }
     },{
         $lookup: {
             from: "bonus",
-            localField: "biwengerId",
-            foreignField: "biwengerUserId",
+            let: { userId: "$biwengerId" },
+            pipeline: [
+                {
+                    $match: {
+                        $expr: {
+                            $and: [
+                                { $eq: ["$biwengerUserId", "$$userId"] },
+                                { $eq: ["$seasonKey", 2018] }
+                            ]
+                        }
+                    }
+                }
+            ],
             as: "bonuses"
         }
     },{
