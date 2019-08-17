@@ -56,7 +56,8 @@ class TransferRecorder {
                 from: unitTransfer.from ? unitTransfer.from.id : undefined,
                 to: unitTransfer.to ? unitTransfer.to.id : undefined,
                 amount: unitTransfer.amount,
-                date: new Date(pBiwengerObj.date * 1000)
+                date: new Date(pBiwengerObj.date * 1000),
+                seasonKey: process.env.CURRENT_SEASON_KEY
             };
             modelObjs.push(modelObj);
         });

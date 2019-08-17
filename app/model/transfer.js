@@ -11,7 +11,8 @@ var transfer = new mongoose.Schema({
         default: -1
     },
     amount: Number,
-    date: Date
+    date: Date,
+    seasonKey: Number
 });
 
 /**

@@ -4,19 +4,31 @@ class PaymentAggregator {
     constructor() {
     }
 
-    getUsersPayment() {
+    getUsersPayment(season) {
         return BiwengerUser.aggregate([
             {
                 $match: { 
                     'biwengerId': {
                         $ne: -1
-                    }
+                    },
+                    'seasons': season
                 }
             },{
                 $lookup: {
                     from: 'roundstandings',
-                    localField: 'biwengerId',
-                    foreignField: 'biwengerUserId',
+                    let: { userId: "$biwengerId" },
+                    pipeline: [
+                        {
+                            $match: {
+                                $expr: {
+                                    $and: [
+                                        { $eq: ["$biwengerUserId", "$$userId"] },
+                                        { $eq: ["$seasonKey", season] }
+                                    ]
+                                }
+                            }
+                        }
+                    ],
                     as: 'payments'
                 }
             },{

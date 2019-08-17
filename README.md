@@ -12,7 +12,8 @@ The following environment variables are available to configure the application:
 * **BIWENGER_X_VERSION**: The version of the Biwenger API to use. This variable is **optional**. If it is not defined, the latest API version will be used. Thus, it is recommended to omit this variable.
 * **BIWENGER_X_USER**: The Biwenger user id. This parameter is needed since March 2019.
 * **BONUS_RETRIEVAL_LIMIT**: The number of Bonus entries to retrieve in every tracking check. This variable is **optional** and the default values is *5*. 
-* **TRANSFER_RETRIEVAL_LIMIT**: The number of TRansfer entries to retrieve in every tracking check. This variable is **optional** and the default values is *5*.
+* **TRANSFER_RETRIEVAL_LIMIT**: The number of transfer entries to retrieve in every tracking check. This variable is **optional** and the default values is *5*.
+* **CURRENT_SEASON_KEY**: The key of the current season. This is used by the different recorders to link the retrieved data to the correct season. For example *2019*.
 * **DB_URI**: The URI to the MongoDB cluster where the documents will be stored. This URI contains the host and the credentials needed to connect to the database.
 * **PORT**: The HTTP port on which the API will be exposed. This variable is automatically set by Heroku.
 * **CORS_DOMAIN**: The allowed domain for CORS restriction. This should be restricted to the domain of the fornt-end app. This variable is **optional** and the default value is '*' to allow requests from any domain.

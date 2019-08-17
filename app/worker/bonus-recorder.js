@@ -55,7 +55,8 @@ class BonusRecorder {
                 biwengerUserId: unitBonus.user.id,
                 amount: unitBonus.amount,
                 reason: unitBonus.reason,
-                date: new Date(pBiwengerBonusObj.date * 1000)
+                date: new Date(pBiwengerBonusObj.date * 1000),
+                seasonKey: process.env.CURRENT_SEASON_KEY
             };
             modelObjs.push(modelObj);
         });

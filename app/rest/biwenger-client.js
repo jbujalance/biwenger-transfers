@@ -24,7 +24,7 @@ class BiwengerClient {
      * @param {Integer} pLimit the number of transfers to return.
      */
     getMostRecentMovements(pOffset, pLimit) {
-        return this.client.get('league/board', {
+        return this.client.get(`league/${process.env.BIWENGER_LEAGUE_ID}/board`, {
             params: {
                 type: 'transfer,market,exchange,loan,loanReturn,clauseIncrement',
                 offset: pOffset,
@@ -56,7 +56,7 @@ class BiwengerClient {
      * @returns a Promise of an array of bonus entries
      */
     getBonuses(pOffset, pLimit) {
-        return this.client.get('league/board', {
+        return this.client.get(`league/${process.env.BIWENGER_LEAGUE_ID}/board`, {
             params: {
                 type: 'bonus',
                 offset: pOffset,
@@ -75,7 +75,7 @@ class BiwengerClient {
      * @returns a Promise of an array of finished rounds
      */
     getRecentRounds(pOffset, pLimit) {
-        return this.client.get('league/board', {
+        return this.client.get(`league/${process.env.BIWENGER_LEAGUE_ID}/board`, {
             params: {
                 type: 'roundFinished',
                 offset: pOffset,

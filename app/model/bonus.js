@@ -4,7 +4,8 @@ var bonus = new mongoose.Schema({
     biwengerUserId: Number,
     amount: Number,
     reason: String,
-    date: Date
+    date: Date,
+    seasonKey: Number
 });
 
 /**

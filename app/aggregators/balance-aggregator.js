@@ -5,40 +5,85 @@ class BalanceAggregator {
     constructor() {
     }
 
-    getUsersBalance() {
+    getUsersBalance(season) {
         return BiwengerUser.aggregate([
             {
                 $match: {
                     'biwengerId': {
                         $ne: -1
-                    }
+                    },
+                    'seasons': season
                 }
             },{
                 $lookup: {
                     from: "transfers",
-                    localField: "biwengerId",
-                    foreignField: "from",
+                    let: { biwengerUserId: "$biwengerId" },
+                    pipeline: [
+                        {
+                            $match: {
+                                $expr: {
+                                    $and: [
+                                        { $eq: ["$from", "$$biwengerUserId"] },
+                                        { $eq: ["$seasonKey", season] }
+                                    ]
+                                }
+                            }
+                        }
+                    ],
                     as: "gainTransfers"
                 }
             },{
                 $lookup: {
                     from: "transfers",
-                    localField: "biwengerId",
-                    foreignField: "to",
+                    let: { biwengerUserId: "$biwengerId" },
+                    pipeline: [
+                        {
+                            $match: {
+                                $expr: {
+                                    $and: [
+                                        { $eq: ["$to", "$$biwengerUserId"] },
+                                        { $eq: ["$seasonKey", season] }
+                                    ]
+                                }
+                            }
+                        }
+                    ],
                     as: "spendingTransfers"
                 }
             },{
                 $lookup: {
                     from: "roundstandings",
-                    localField: "biwengerId",
-                    foreignField: "biwengerUserId",
+                    let: { userId: "$biwengerId" },
+                    pipeline: [
+                        {
+                            $match: {
+                                $expr: {
+                                    $and: [
+                                        { $eq: ["$biwengerUserId", "$$userId"] },
+                                        { $eq: ["$seasonKey", season] }
+                                    ]
+                                }
+                            }
+                        }
+                    ],
                     as: "roundBonuses"
                 }
             },{
                 $lookup: {
                     from: "bonus",
-                    localField: "biwengerId",
-                    foreignField: "biwengerUserId",
+                    let: { userId: "$biwengerId" },
+                    pipeline: [
+                        {
+                            $match: {
+                                $expr: {
+                                    $and: [
+                                        { $eq: ["$biwengerUserId", "$$userId"] },
+                                        { $eq: ["$seasonKey", season] }
+                                    ]
+                                }
+                            }
+                        }
+                    ],
                     as: "bonuses"
                 }
             },{
