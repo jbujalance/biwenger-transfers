@@ -1,6 +1,6 @@
 class PaymentDecorator {
     constructor() {
-        this.lastPositionsPayments = [0.25, 0.5, 0.75, 1];
+        this.lastPositionsPayments = [0.5, 0.75, 1];
     }
 
     /**
