@@ -23,7 +23,7 @@ class StandingRecorder {
                         console.log('Error while creating standings documents: ' + err);
                         pCallback(err);
                     } else {
-                        if (newDocs) console.log('Successfully created following transfer documents: ' + newDocs);
+                        if (newDocs) console.log('Successfully created following standing documents: ' + newDocs);
                         pCallback(newDocs);
                     }
                 });
