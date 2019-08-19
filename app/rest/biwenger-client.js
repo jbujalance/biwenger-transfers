@@ -107,7 +107,7 @@ class BiwengerClient {
             'reason': pReason,
             'amount': pAmounts
         }
-        return this.client.post('admin/bonus', postObj).then(res => {
+        return this.client.post(`league/${process.env.BIWENGER_LEAGUE_ID}/bonus`, postObj).then(res => {
             return res;
         });
     }
