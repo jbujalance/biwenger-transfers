@@ -120,7 +120,7 @@ class BiwengerClient {
      * @returns {Promise<Object>} a Promise of the posted message
      */
     postBoardMessage(pMessage) {
-        return this.client.post('league/board', pMessage).then(response => {
+        return this.client.post(`league/${process.env.BIWENGER_LEAGUE_ID}/board`, pMessage).then(response => {
             return response;
         });
     }

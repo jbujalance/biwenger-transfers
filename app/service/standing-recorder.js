@@ -1,5 +1,7 @@
 const BiwengerClient = require('../rest/biwenger-client');
+const htmlHelper = require('../rest/html-helper');
 const RoundStanding = require('../model/round-standing');
+const PaymentAggregator = require('../aggregators/payment-aggregator');
 const PositionDecorator = require('../decorator/position-decorator');
 const PaymentDecorator = require('../decorator/payment-decorator');
 const BonusAdjuster = require('../decorator/bonus-adjustment');
@@ -9,6 +11,7 @@ class StandingRecorder {
     constructor() {
         this.restClient = new BiwengerClient();
         this.standingDao = RoundStanding;
+        this.paymentAggregator = new PaymentAggregator();
         this.positionDecorator = new PositionDecorator();
         this.paymentDecorator = new PaymentDecorator();
         this.bonusAdjuster = new BonusAdjuster();
@@ -66,18 +69,30 @@ class StandingRecorder {
                 pCallback(err);
             } else {
                 console.log('Successfully created following transfer documents: ' + newDocs);
-                // TODO call the PaymentAggregator here to retrieve the global payments and post them in the league board, then call the callback to close the db connection
-                pCallback(newDocs);
+                this._retrieveAndPostPaymentsOnLeagueBoard(pSaveableObjs[0].roundName, pCallback);
             }
         });
     }
 
     /**
      * Retrieves the global payments of the users and post them in the league board.
-     * @param {Function} pFinishCallback The final callback, commonly the database disconnection.
+     * @param {Function} finishCallback The final callback, commonly the database disconnection.
      */
-    _retrieveAndPostPaymentsOnLeagueBoard(pFinishCallback) {
-
+    _retrieveAndPostPaymentsOnLeagueBoard(roundName, finishCallback) {
+        this.paymentAggregator.getUsersPayment(process.env.CURRENT_SEASON_KEY).then(payments => {
+            let boardMessage = {
+                'title': `Pagas totales después de ${roundName}`,
+                'content': htmlHelper.paymentsToHtmlTable(payments) + htmlHelper.buildDetailsFooter()
+            };
+            console.log(`Posting global payments to league board: ${boardMessage}`);
+            this.restClient.postBoardMessage(boardMessage)
+                .then(res => console.log(`Payments posted to league board: ${res.data}`))
+                .catch(err => console.error(`Could not post payments to league board: ${err}`));
+            finishCallback();
+        }).catch(err => {
+            console.error(`An error occurred while retrieving the global payments before posting them to the league board: ${err.data}`);
+            finishCallback();
+        });
     }
 }
 
