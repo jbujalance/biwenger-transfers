@@ -84,7 +84,7 @@ class StandingRecorder {
                 'title': `Pagas totales después de ${roundName}`,
                 'content': htmlHelper.paymentsToHtmlTable(payments) + htmlHelper.buildDetailsFooter()
             };
-            console.log(`Posting global payments to league board: ${boardMessage}`);
+            console.log(`Posting global payments to league board: ${JSON.stringify(boardMessage)}`);
             this.restClient.postBoardMessage(boardMessage)
                 .then(res => console.log(`Payments posted to league board: ${res.data}`))
                 .catch(err => console.error(`Could not post payments to league board: ${err}`));
