@@ -4,7 +4,9 @@
  * @returns A string representing an HTML table with two columns: the user name and its global payment.
  */
 module.exports.paymentsToHtmlTable = function (payments) {
-    return _buildTable(payments);
+    let html = _buildTable(payments);
+    console.log('HTML table generated from the season payments: ' + html);
+    return html;
 }
 
 _buildRow = function (payment) {

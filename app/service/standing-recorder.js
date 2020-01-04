@@ -80,11 +80,12 @@ class StandingRecorder {
      */
     _retrieveAndPostPaymentsOnLeagueBoard(roundName, finishCallback) {
         this.paymentAggregator.getUsersPayment(process.env.CURRENT_SEASON_KEY).then(payments => {
+            console.log('Loaded user season payments: ' + JSON.stringify(payments));
             let boardMessage = {
                 'title': `Pagas totales después de ${roundName}`,
                 'content': htmlHelper.paymentsToHtmlTable(payments) + htmlHelper.buildDetailsFooter()
             };
-            console.log(`Posting global payments to league board: ${JSON.stringify(boardMessage)}`);
+            console.log('Posting global payments message to league board: ' + JSON.stringify(boardMessage));
             this.restClient.postBoardMessage(boardMessage)
                 .then(res => console.log(`Payments posted to league board: ${res.data}`))
                 .catch(err => console.error(`Could not post payments to league board: ${err}`));
