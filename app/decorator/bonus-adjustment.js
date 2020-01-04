@@ -32,6 +32,11 @@ class BonusAdjuster {
     _generatePointsBuckets(pStandings) {
         let grouped = {};
         pStandings.forEach(standing => {
+            if (!standing.bonus) {
+                // If the bonus is not defined in the standing, it means that this user ended the round with negative money, and was not given any bonus.
+                // Thus, these users should not be taken into account for the bonus adjustment 
+                return;
+            }
             let currentPoints = standing.points;
             if (currentPoints in grouped) {
                 grouped[currentPoints].push(standing);
